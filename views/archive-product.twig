@@ -1,0 +1,21 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<section class="container products-archive">
+  <h1>Menu</h1>
+  <div class="grid products-grid">
+    {% for p in posts %}
+      <article class="card">
+        <a href="{{ p.link }}">
+          {% if p.thumbnail %}<img src="{{ p.thumbnail.src }}" alt="{{ p.title }}">{% endif %}
+          <h3>{{ p.title }}</h3>
+          {% if p.meta('price') %}<p class="price">£{{ p.meta('price') }}</p>{% endif %}
+          <p class="excerpt">{{ p.excerpt(80) }}</p>
+        </a>
+      </article>
+    {% else %}
+      <p>No products yet — add some in the admin.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

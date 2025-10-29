@@ -1,0 +1,10 @@
+{% extends "base.twig" %}
+
+{% block content %}
+  <section class="container narrow">
+    <h1>{{ post.title }}</h1>
+    <div class="wysiwyg">
+      {{ post.content }}
+    </div>
+  </section>
+{% endblock %}

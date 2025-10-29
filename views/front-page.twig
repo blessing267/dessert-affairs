@@ -1,0 +1,43 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<section class="hero">
+  <div class="container">
+    <h1 class="site-title">Welcome to Dessert Affairs</h1>
+    <p class="tagline">Sweet treats, small chops, and indulgent moments</p>
+    <a href="{{ site.url }}/menu" class="btn">View Our Menu</a>
+  </div>
+</section>
+
+<section class="featured-products container">
+  <h2>Our Top Picks</h2>
+  <div class="grid products-grid">
+    {% set featured = Timber.get_posts({
+      post_type: 'product',
+      posts_per_page: 3
+    }) %}
+    
+    {% for p in featured %}
+      <article class="card">
+        <a href="{{ p.link }}">
+          {% if p.thumbnail %}
+            <img src="{{ p.thumbnail.src }}" alt="{{ p.title }}">
+          {% endif %}
+          <h3>{{ p.title }}</h3>
+          {% if p.meta('price') %}
+            <p class="price">£{{ p.meta('price') }}</p>
+          {% endif %}
+        </a>
+      </article>
+    {% else %}
+      <p>No featured desserts yet — add some under Products!</p>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="about container">
+  <h2>About Dessert Affairs</h2>
+  <p>We make every bite memorable — from cakes and parfaits to perfectly baked small chops. Each dessert is crafted with love and attention to detail.</p>
+  <p><strong>Order yours today and taste the difference!</strong></p>
+</section>
+{% endblock %}

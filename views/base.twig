@@ -1,0 +1,28 @@
+<!doctype html>
+<html {{ site.language_attributes }}>
+<head>
+  <meta charset="{{ site.charset }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if wp_title %}{{ wp_title }} | {% endif %}{{ site.name }}</title>
+  {{ function('wp_head') }}
+</head>
+<body class="{{ body_class }}">
+  <header>
+    <div class="container">
+      <h1><a href="{{ site.url }}">{{ site.name }}</a></h1>
+      <p>{{ site.description }}</p>
+    </div>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <div class="container">
+      <small>&copy; {{ "now"|date("Y") }} {{ site.name }}</small>
+    </div>
+  </footer>
+  {{ function('wp_footer') }}
+</body>
+</html>

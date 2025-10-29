@@ -1,0 +1,17 @@
+# Ignore system and IDE files
+.DS_Store
+*.log
+.vscode/
+.idea/
+Thumbs.db
+
+# Ignore dependency and build folders
+node_modules/
+vendor/
+
+# Ignore compiled CSS if you only want to show SCSS source files
+assets/css/
+
+# Ignore any temporary files
+*.tmp
+*.bak

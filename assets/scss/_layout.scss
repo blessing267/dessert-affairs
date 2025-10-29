@@ -1,0 +1,24 @@
+.hero {
+  background: linear-gradient(135deg, #fddde6, #fff);
+  text-align: center;
+  padding: 4rem 1rem;
+
+  .site-title {
+    font-size: 2.5rem;
+    margin: 0 0 .5rem;
+  }
+  .tagline {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: #444;
+  }
+  .btn {
+    background: #b84a5a;
+    color: #fff;
+    text-decoration: none;
+    padding: .8rem 1.5rem;
+    border-radius: 8px;
+    display: inline-block;
+  }
+}
+

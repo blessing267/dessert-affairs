@@ -1,0 +1,43 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<section class="container product-single">
+  <div class="product-grid">
+    <div class="product-media">
+      {% if post.thumbnail %}
+        <img class="featured" src="{{ post.thumbnail.src }}" alt="{{ post.title }}">
+      {% elseif post.meta('gallery') and post.meta('gallery')[0] %}
+        {% set first = post.meta('gallery')[0] %}
+        <img class="featured" src="{{ first.url }}" alt="{{ first.alt ?: post.title }}">
+      {% endif %}
+    </div>
+
+    <div class="product-content">
+      <h1 class="product-title">{{ post.title }}</h1>
+
+      {% if post.meta('price') %}
+        <p class="product-price">£{{ post.meta('price') }}</p>
+      {% endif %}
+
+      {% if post.meta('flavour') %}
+        <p class="product-flavour"><strong>Flavour:</strong> {{ post.meta('flavour') }}</p>
+      {% endif %}
+
+      {% if post.meta('ingredients') %}
+        <div class="product-ingredients">
+          <h4>Ingredients</h4>
+          <p>{{ post.meta('ingredients') }}</p>
+        </div>
+      {% endif %}
+
+      <div class="product-body">
+        {{ post.content }}
+      </div>
+
+      <div class="product-actions">
+        <a class="btn" href="#contact">Order / Enquire</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
