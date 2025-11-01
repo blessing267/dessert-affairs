@@ -48,22 +48,3 @@ add_action( 'wp_enqueue_scripts', function() {
   }
 } );
 
-/**
- * Register Products CPT (Desserts / Small chops)
- */
-add_action('init', function () {
-  register_post_type('product', [
-    'labels' => [
-      'name' => __('Products'),
-      'singular_name' => __('Product'),
-      'add_new_item' => __('Add New Product'),
-      'edit_item' => __('Edit Product'),
-    ],
-    'public' => true,
-    'has_archive' => true,
-    'show_in_rest' => true,
-    'menu_position' => 20,
-    'supports' => ['title', 'editor', 'thumbnail', 'excerpt'],
-    'rewrite' => ['slug' => 'menu'],
-  ]);
-});

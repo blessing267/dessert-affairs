@@ -20,7 +20,7 @@ if ( is_front_page() ) {
   return;
 }
 
-// Single product (single-product.twig)
+// Single product (single-product.twig) My presentation template
 if ( is_singular( 'product' ) ) {
   $context['post'] = new Timber\Post();
   Timber\Timber::render( 'single-product.twig', $context );
