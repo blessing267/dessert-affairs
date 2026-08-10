@@ -2,14 +2,15 @@
 
 {% block content %}
 
+<!--Hero Section-->
 <section
     class="hero"
     {% if hero_image %}
         style="
             background-image:
             linear-gradient(
-                rgba(0, 0, 0, 0.35),
-                rgba(0, 0, 0, 0.35)
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15)
             ),
             url('{{ hero_image.url }}');
         "
@@ -17,34 +18,71 @@
 >
     <div class="container hero-content">
 
-        <h1 class="site-title">
-            {{ hero_title ?: 'Welcome to Dessert Affairs' }}
-        </h1>
+        {% if hero_title %}
+            <h1 class="site-title">
+                {{ hero_title }}
+            </h1>
+        {% endif %}
 
-        <p class="tagline">
-            {{
-                hero_text
-                ?: 'Sweet treats, cakes and indulgent moments.'
-            }}
-        </p>
+        {% if hero_text %}
+            <p class="tagline">
+                {{ hero_text }}
+            </p>
+        {% endif %}
 
-        <a
-            href="{{ function(
-                'get_post_type_archive_link',
-                'product'
-            ) }}"
-            class="btn"
-        >
-            {{
-                hero_button_text
-                ?: 'Shop Desserts'
-            }}
-        </a>
-
+        {% if hero_button_text %}
+            <div class="hero-actions">
+            
+            <a
+                href="{{ function(
+                    'get_post_type_archive_link',
+                    'product'
+                ) }}"
+                class="btn"
+            >
+                {{
+                    hero_button_text 
+                }}
+            </a>
+            </div>
+        {% endif %}
     </div>
 </section>
 
+<!--Shop by categories-->
+<section class="shop-categories">
 
+    <div class="container">
+
+        <div class="section-heading">
+            <span class="section-eyebrow">
+                Browse
+            </span>
+
+            <h2>Shop by Category</h2>
+
+            <p>
+                Explore our dessert categories and
+                find something delicious.
+            </p>
+        </div>
+
+        <div class="category-grid">
+
+            {{
+                function(
+                    'do_shortcode',
+                    '[product_categories ids="" columns="3" hide_empty="0"]'
+                )
+            }}
+
+        </div>
+
+    </div>
+
+</section>
+
+<!--Featured Prducts-->
 <section class="featured-products">
 
     <div class="container">
@@ -87,7 +125,7 @@
 
 </section>
 
-
+<!--About-->
 <section class="about-section">
 
     <div class="container about-inner">
@@ -126,4 +164,166 @@
 
 </section>
 
+<!--Catering-->
+<section class="catering-section">
+
+    <div class="container catering-grid">
+
+        <div class="catering-image">
+
+            {% if catering_image %}
+                <img
+                    src="{{ catering_image.url }}"
+                    alt="{{ catering_image.alt }}"
+                >
+            {% endif %}
+
+        </div>
+
+        <div class="catering-content">
+
+            <span class="section-eyebrow">
+                Celebrations & Events
+            </span>
+
+            <h2>
+                {{
+                    catering_title
+                    ?: 'Catering for every occasion'
+                }}
+            </h2>
+
+            <p>
+                {{
+                    catering_text
+                    ?: 'From birthdays and weddings to
+                    private events, we create desserts
+                    made for memorable celebrations.'
+                }}
+            </p>
+
+            <a
+                href="{{ site.url }}/contact/"
+                class="btn"
+            >
+                {{
+                    catering_button_text
+                    ?: 'Enquire About Catering'
+                }}
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!--Testimonial-->
+{% if testimonials %}
+
+<section class="testimonials-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="section-eyebrow">
+                Kind Words
+            </span>
+
+            <h2>
+                {{
+                    testimonials_title
+                    ?: 'What Our Customers Say'
+                }}
+            </h2>
+
+        </div>
+
+        <div class="testimonials-grid">
+
+            {% for testimonial in testimonials %}
+
+                {% if testimonial.text %}
+
+                    <article class="testimonial-card">
+
+                        <div class="testimonial-stars">
+                            ★★★★★
+                        </div>
+
+                        <blockquote>
+                            "{{ testimonial.text }}"
+                        </blockquote>
+
+                        {% if testimonial.name %}
+                            <p class="testimonial-name">
+                                — {{ testimonial.name }}
+                            </p>
+                        {% endif %}
+
+                    </article>
+
+                {% endif %}
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endif %}
+
+<!--Gallery-->
+<section class="gallery-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="section-eyebrow">
+                Our Creations
+            </span>
+
+            <h2>
+                {{
+                    gallery_title
+                    ?: 'A Little Taste of Dessert Affairs'
+                }}
+            </h2>
+
+            <p>
+                Take a look at some of our cakes,
+                desserts and sweet creations.
+            </p>
+
+        </div>
+
+        <div class="gallery-grid">
+
+            {% for image in gallery_images %}
+
+                {% if image %}
+
+                    <div class="gallery-item">
+
+                        <img
+                            src="{{ image.url }}"
+                            alt="{{ image.alt }}"
+                            loading="lazy"
+                        >
+
+                    </div>
+
+                {% endif %}
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
 {% endblock %}
