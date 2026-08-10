@@ -1,40 +1,45 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-  exit;
+
+if (!defined('ABSPATH')) {
+    exit;
 }
 
-// If Timber isn't available, fall back to classic WP templates
-if ( ! class_exists('Timber\\Timber') && ! class_exists('Timber') ) {
-  get_header();
-  echo '<main><h1>Timber plugin not active</h1></main>';
-  get_footer();
-  return;
+if (
+    ! class_exists('Timber\\Timber') &&
+    ! class_exists('Timber')
+) {
+    get_header();
+
+    echo '<main class="container">';
+    echo '<h1>Timber plugin is not active.</h1>';
+    echo '</main>';
+
+    get_footer();
+    return;
 }
 
 $context = Timber\Timber::context();
-
-// Front page (static Home)
-if ( is_front_page() ) {
-  $context['post'] = new Timber\Post();
-  Timber\Timber::render( 'front-page.twig', $context );
-  return;
-}
-
-// Single product (single-product.twig) My presentation template
-if ( is_singular( 'product' ) ) {
-  $context['post'] = new Timber\Post();
-  Timber\Timber::render( 'single-product.twig', $context );
-  return;
-}
-
-// Product archive (archive-product.twig)
-if ( is_post_type_archive( 'product' ) ) {
-  $context['posts'] = Timber\Timber::get_posts();
-  Timber\Timber::render( 'archive-product.twig', $context );
-  return;
-}
-
-// Fallback: render index.twig
-$context['post']  = new Timber\Post();
+$context['post'] = new Timber\Post();
 $context['posts'] = Timber\Timber::get_posts();
-Timber\Timber::render( 'index.twig', $context );
+
+if (is_front_page()) {
+
+    $context['hero_title'] = get_field('hero_title');
+    $context['hero_text'] = get_field('hero_text');
+    $context['hero_image'] = get_field('hero_image');
+    $context['hero_button_text'] = get_field(
+        'hero_button_text'
+    );
+
+    $context['about_title'] = get_field('about_title');
+    $context['about_text'] = get_field('about_text');
+
+    Timber\Timber::render(
+        'front-page.twig',
+        $context
+    );
+
+    return;
+}
+
+Timber\Timber::render('index.twig', $context);

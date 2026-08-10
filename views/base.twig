@@ -1,28 +1,138 @@
 <!doctype html>
 <html {{ site.language_attributes }}>
-<head>
-  <meta charset="{{ site.charset }}">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% if wp_title %}{{ wp_title }} | {% endif %}{{ site.name }}</title>
-  {{ function('wp_head') }}
-</head>
-<body class="{{ body_class }}">
-  <header>
-    <div class="container">
-      <h1><a href="{{ site.url }}">{{ site.name }}</a></h1>
-      <p>{{ site.description }}</p>
-    </div>
-  </header>
+	<head>
+		<meta charset="{{ site.charset }}">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>
+			{% if wp_title %}
+				{{ wp_title }}
+				|
+			{% endif %}
+			{{ site.name }}</title>
+		{{ function('wp_head') }}
+	</head>
+	<body class="{{ body_class }}">
+		<header class="site-header">
+			<div class="container header-inner">
 
-  <main>
-    {% block content %}{% endblock %}
-  </main>
+				<div class="site-branding">
+					<a href="{{ site.url }}" class="site-logo">
+						{{ site.name }}
+					</a>
+				</div>
 
-  <footer>
-    <div class="container">
-      <small>&copy; {{ "now"|date("Y") }} {{ site.name }}</small>
-    </div>
-  </footer>
-  {{ function('wp_footer') }}
-</body>
+				<nav class="main-navigation" aria-label="Primary navigation">
+					{{
+                function(
+                    'wp_nav_menu',
+                    {
+                        'theme_location': 'primary',
+                        'container': false,
+                        'menu_class': 'nav-menu',
+                        'fallback_cb': false,
+                        'echo': false
+                    }
+                )
+            }}
+				</nav>
+
+				<div class="header-actions">
+
+					{% if function('class_exists', 'WooCommerce') %}
+
+						<a href="{{ function('wc_get_page_permalink', 'myaccount') }}" class="account-link">
+							My Account
+						</a>
+
+						<a href="{{ function('wc_get_cart_url') }}" class="cart-link">
+							Cart
+
+							{% if function('WC') and function('WC').cart %}
+								<span class="cart-count">
+									{{ function('WC').cart.get_cart_contents_count() }}
+								</span>
+							{% endif %}
+						</a>
+
+					{% endif %}
+
+				</div>
+
+			</div>
+		</header>
+
+		<main>
+			{% block content %}{% endblock %}
+		</main>
+
+		<footer class="site-footer">
+
+			<div class="container footer-grid">
+
+				<div class="footer-brand">
+					<h3>Dessert Affairs</h3>
+
+					<p>
+						Sweet treats, beautiful cakes and
+						                unforgettable moments.
+					</p>
+				</div>
+
+				<div class="footer-links">
+					<h4>Explore</h4>
+
+					{{
+                function(
+                    'wp_nav_menu',
+                    {
+                        'theme_location': 'primary',
+                        'container': false,
+                        'menu_class': 'footer-menu',
+                        'fallback_cb': false,
+                        'echo': false
+                    }
+                )
+            }}
+				</div>
+
+				<div class="footer-shop">
+					<h4>Shop</h4>
+
+					<a href="{{ function('wc_get_page_permalink', 'shop') }}">
+						Shop desserts
+					</a>
+
+					<a href="{{ function('wc_get_cart_url') }}">
+						Cart
+					</a>
+
+					<a href="{{ function('wc_get_page_permalink', 'myaccount') }}">
+						My Account
+					</a>
+				</div>
+
+				<div class="footer-contact">
+					<h4>Contact</h4>
+
+					<p>
+						Made with love for every celebration.
+					</p>
+				</div>
+
+			</div>
+
+			<div class="footer-bottom">
+				<div class="container">
+					<p>
+						&copy;
+						{{ "now"|date("Y") }}
+						{{ site.name }}.
+						                All rights reserved.
+					</p>
+				</div>
+			</div>
+
+		</footer>
+		{{ function('wp_footer') }}
+	</body>
 </html>
