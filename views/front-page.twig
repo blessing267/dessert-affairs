@@ -2,51 +2,37 @@
 
 {% block content %}
 
-<!--Hero Section-->
+<!-- Hero Section -->
 <section
     class="hero"
     {% if hero_image %}
         style="
             background-image:
-            linear-gradient(
-                rgba(0, 0, 0, 0.15),
-                rgba(0, 0, 0, 0.15)
-            ),
             url('{{ hero_image.url }}');
         "
     {% endif %}
 >
-    <div class="container hero-content">
 
-        {% if hero_title %}
-            <h1 class="site-title">
-                {{ hero_title }}
-            </h1>
-        {% endif %}
-
-        {% if hero_text %}
-            <p class="tagline">
-                {{ hero_text }}
-            </p>
-        {% endif %}
-
-        {% if hero_button_text %}
-            <div class="hero-actions">
-            
-            <a
-                href="{{ function(
-                    'get_post_type_archive_link',
-                    'product'
-                ) }}"
-                class="btn"
-            >
-                {{
-                    hero_button_text 
-                }}
-            </a>
-            </div>
-        {% endif %}
+    <div class="hero-wave" aria-hidden="true">
+        <svg
+            viewBox="0 0 1440 120"
+            preserveAspectRatio="none"
+        >
+            <path
+                fill="currentColor"
+                d="
+                    M0,55
+                    C180,100 320,10 560,45
+                    C790,80 980,120 1200,65
+                    C1310,38 1370,35 1440,55
+                    L1440,120
+                    L0,120
+                    Z
+                "
+            />
+        </svg>
     </div>
+
 </section>
 
 <!--Shop by categories-->

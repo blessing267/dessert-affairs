@@ -39,7 +39,7 @@ The project was developed using a custom-theme workflow rather than relying on a
 
 ### 🏠 Homepage
 
-![Homepage](assets/images/homepage.png)
+![Homepage](assets/images/home.png)
 
 <br>
 
