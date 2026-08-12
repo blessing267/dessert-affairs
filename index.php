@@ -25,6 +25,8 @@ $context['posts'] = Timber\Timber::get_posts();
 $site_settings = get_page_by_path('site-settings');
 
 if ($site_settings) {
+    // footer ACF data
+
     $context['footer_text'] = get_field(
         'footer_text',
         $site_settings->ID
@@ -57,6 +59,7 @@ if ($site_settings) {
 }
 
 if (is_front_page()) {
+    // Homepage ACF data
 
     $context['hero_title'] = get_field('hero_title');
     $context['hero_text'] = get_field('hero_text');
@@ -100,6 +103,58 @@ if (is_front_page()) {
 
     Timber\Timber::render(
         'front-page.twig',
+        $context
+    );
+
+    return;
+}
+
+if (is_page('contact')) {
+    Timber\Timber::render('contact-page.twig', $context);
+    return;
+}
+
+if (is_page('about')) {
+    // About ACF data
+
+    $context['about_hero_title'] = get_field(
+        'about_hero_title'
+    );
+
+    $context['about_hero_text'] = get_field(
+        'about_hero_text'
+    );
+
+    $context['about_hero_image'] = get_field(
+        'about_hero_image'
+    );
+
+    $context['story_title'] = get_field(
+        'story_title'
+    );
+
+    $context['story_text'] = get_field(
+        'story_text'
+    );
+
+    $context['story_image'] = get_field(
+        'story_image'
+    );
+
+    $context['occasion_title'] = get_field(
+        'occasion_title'
+    );
+
+    $context['occasion_text'] = get_field(
+        'occasion_text'
+    );
+
+    $context['occasion_image'] = get_field(
+        'occasion_image'
+    );
+
+    Timber\Timber::render(
+        'about-page.twig',
         $context
     );
 

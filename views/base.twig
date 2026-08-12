@@ -12,17 +12,22 @@
 		{{ function('wp_head') }}
 	</head>
 	<body class="{{ body_class }}">
-		<header class="site-header">
-			<div class="container header-inner">
+<header class="site-header">
 
-				<div class="site-branding">
-					<a href="{{ site.url }}" class="site-logo">
-						{{ site.name }}
-					</a>
-				</div>
+	<div class="container header-inner">
 
-				<nav class="main-navigation" aria-label="Primary navigation">
-					{{
+		<div class="site-branding">
+    		<a href="{{ site.url }}" class="site-logo">
+        		<img
+            		src="{{ theme.link }}/assets/images/logo.png"
+            		alt="{{ site.name }}"
+            		class="site-logo-image"
+        		>
+    		</a>
+		</div>
+
+		<nav class="main-navigation" id="primary-navigation" aria-label="Primary navigation">
+			{{
                 function(
                     'wp_nav_menu',
                     {
@@ -34,32 +39,52 @@
                     }
                 )
             }}
-				</nav>
+		</nav>
 
-				<div class="header-actions">
+		<div class="header-actions">
 
-					{% if function('class_exists', 'WooCommerce') %}
+			{% if function('class_exists', 'WooCommerce') %}
 
-						<a href="{{ function('wc_get_page_permalink', 'myaccount') }}" class="account-link">
-							My Account
-						</a>
+				<a href="{{ function('wc_get_page_permalink', 'myaccount') }}" class="account-link" aria-label="My Account">
+					<span class="account-icon" aria-hidden="true">
+						♙
+					</span>
 
-						<a href="{{ function('wc_get_cart_url') }}" class="cart-link">
-							Cart
+					<span class="account-text">
+						My Account
+					</span>
+				</a>
 
-							{% if function('WC') and function('WC').cart %}
-								<span class="cart-count">
-									{{ function('WC').cart.get_cart_contents_count() }}
-								</span>
-							{% endif %}
-						</a>
+				<a href="{{ function('wc_get_cart_url') }}" class="cart-link" aria-label="Shopping cart">
+					<span class="cart-icon" aria-hidden="true">
+						♧
+					</span>
 
+					<span class="cart-text">
+						Cart
+					</span>
+
+					{% if function('WC') and function('WC').cart %}
+						<span class="cart-count">
+							{{ function('WC').cart.get_cart_contents_count() }}
+						</span>
 					{% endif %}
+				</a>
 
-				</div>
+			{% endif %}
 
-			</div>
-		</header>
+			<button class="menu-toggle" type="button" aria-controls="primary-navigation" aria-expanded="false" aria-label="Open navigation menu">
+				<span></span>
+				<span></span>
+				<span></span>
+			</button>
+
+		</div>
+
+	</div>
+
+</header>
+
 
 		<main>
 			{% block content %}{% endblock %}

@@ -54,6 +54,95 @@ add_action(
 );
 
 /**
+ * Remove the default WooCommerce sidebar.
+ */
+remove_action(
+    'woocommerce_sidebar',
+    'woocommerce_get_sidebar',
+    10
+);
+
+/**
+ * Display product category navigation
+ * on the Shop and category archive pages.
+ */
+function dessert_affairs_shop_categories(): void
+{
+    if (
+        ! is_shop() &&
+        ! is_product_category()
+    ) {
+        return;
+    }
+
+    $categories = get_terms([
+        'taxonomy'   => 'product_cat',
+        'hide_empty' => true,
+        'exclude'    => [
+            get_option('default_product_cat'),
+        ],
+    ]);
+
+    if (
+        is_wp_error($categories) ||
+        empty($categories)
+    ) {
+        return;
+    }
+
+    $current_category = null;
+
+    if (is_product_category()) {
+        $current_category = get_queried_object();
+    }
+
+    echo '<nav class="shop-categories">';
+
+    $all_class = is_shop()
+        ? ' class="active"'
+        : '';
+
+    echo '<a'
+        . $all_class
+        . ' href="'
+        . esc_url(wc_get_page_permalink('shop'))
+        . '">All Desserts</a>';
+
+    foreach ($categories as $category) {
+
+        $link = get_term_link($category);
+
+        if (is_wp_error($link)) {
+            continue;
+        }
+
+        $active_class = (
+            $current_category &&
+            (int) $current_category->term_id ===
+            (int) $category->term_id
+        )
+            ? ' class="active"'
+            : '';
+
+        echo '<a'
+            . $active_class
+            . ' href="'
+            . esc_url($link)
+            . '">'
+            . esc_html($category->name)
+            . '</a>';
+    }
+
+    echo '</nav>';
+}
+
+add_action(
+    'woocommerce_before_shop_loop',
+    'dessert_affairs_shop_categories',
+    15
+);
+
+/**
  * Load the theme stylesheet.
  */
 function dessert_affairs_enqueue_styles(): void
@@ -84,4 +173,26 @@ function dessert_affairs_enqueue_styles(): void
 add_action(
     'wp_enqueue_scripts',
     'dessert_affairs_enqueue_styles'
+);
+
+function dessert_affairs_enqueue_scripts(): void
+{
+    $script_path = get_stylesheet_directory()
+        . '/assets/js/navigation.js';
+
+    if (file_exists($script_path)) {
+        wp_enqueue_script(
+            'dessert-affairs-navigation',
+            get_stylesheet_directory_uri()
+                . '/assets/js/navigation.js',
+            [],
+            (string) filemtime($script_path),
+            true
+        );
+    }
+}
+
+add_action(
+    'wp_enqueue_scripts',
+    'dessert_affairs_enqueue_scripts'
 );

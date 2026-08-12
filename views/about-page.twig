@@ -1,10 +1,248 @@
 {% extends "base.twig" %}
 
 {% block content %}
-  <section class="container narrow">
-    <h1>{{ post.title }}</h1>
-    <div class="wysiwyg">
-      {{ post.content }}
+
+<section
+    class="page-hero about-hero"
+    {% if about_hero_image %}
+        style="
+            background-image:
+            linear-gradient(
+                rgba(0, 0, 0, 0.35),
+                rgba(0, 0, 0, 0.35)
+            ),
+            url('{{ about_hero_image.url }}');
+        "
+    {% endif %}
+>
+
+    <div class="container">
+
+        <span class="section-eyebrow">
+            About Us
+        </span>
+
+        <h1>
+            {{
+                about_hero_title
+                ?: 'The Story Behind Dessert Affairs'
+            }}
+        </h1>
+
+        <p>
+            {{
+                about_hero_text
+                ?: 'Sweet moments, thoughtful details
+                and desserts made with care.'
+            }}
+        </p>
+
     </div>
-  </section>
+
+</section>
+
+
+<section class="story-section">
+
+    <div class="container story-grid">
+
+        <div class="story-image">
+
+            {% if story_image %}
+                <img
+                    src="{{ story_image.url }}"
+                    alt="{{ story_image.alt }}"
+                >
+            {% endif %}
+
+        </div>
+
+        <div class="story-content">
+
+            <span class="section-eyebrow">
+                Our Story
+            </span>
+
+            <h2>
+                {{
+                    story_title
+                    ?: 'Made With Passion'
+                }}
+            </h2>
+
+            <p>
+                {{
+                    story_text
+                    ?: 'Dessert Affairs is all about
+                    creating sweet experiences for
+                    celebrations, gatherings and
+                    everyday moments.'
+                }}
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="about-values">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="section-eyebrow">
+                What We Believe
+            </span>
+
+            <h2>
+                What Makes Dessert Affairs Special
+            </h2>
+
+        </div>
+
+        <div class="values-grid">
+
+            <article class="value-card">
+
+                <h3>Made With Care</h3>
+
+                <p>
+                    Every dessert is created with
+                    attention to flavour, presentation
+                    and the little details that matter.
+                </p>
+
+            </article>
+
+            <article class="value-card">
+
+                <h3>Made For You</h3>
+
+                <p>
+                    From everyday treats to special
+                    celebrations, we aim to create
+                    desserts that suit the moment.
+                </p>
+
+            </article>
+
+            <article class="value-card">
+
+                <h3>Made To Remember</h3>
+
+                <p>
+                    We believe desserts should be more
+                    than something sweet — they should
+                    be part of the memory.
+                </p>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="occasion-section">
+
+    <div class="container occasion-grid">
+
+        <div class="occasion-content">
+
+            <span class="section-eyebrow">
+                Every Occasion
+            </span>
+
+            <h2>
+                {{
+                    occasion_title
+                    ?: 'Sweet Moments For Every Celebration'
+                }}
+            </h2>
+
+            <p>
+                {{
+                    occasion_text
+                    ?: 'Birthdays, weddings, parties,
+                    corporate events and everything
+                    in between.'
+                }}
+            </p>
+
+            <a
+                href="{{ site.url }}/contact/"
+                class="btn"
+            >
+                Enquire With Us
+            </a>
+
+        </div>
+
+        <div class="occasion-image">
+
+            {% if occasion_image %}
+                <img
+                    src="{{ occasion_image.url }}"
+                    alt="{{ occasion_image.alt }}"
+                >
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="about-cta">
+
+    <div class="container">
+
+        <div class="about-cta-inner">
+
+            <span class="section-eyebrow">
+                Ready For Something Sweet?
+            </span>
+
+            <h2>
+                Discover Dessert Affairs
+            </h2>
+
+            <p>
+                Browse our desserts or get in touch
+                to discuss something special.
+            </p>
+
+            <div class="about-cta-actions">
+
+                <a
+                    href="{{ function(
+                        'wc_get_page_permalink',
+                        'shop'
+                    ) }}"
+                    class="btn"
+                >
+                    Shop Desserts
+                </a>
+
+                <a
+                    href="{{ site.url }}/contact/"
+                    class="text-link"
+                >
+                    Contact Us →
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
 {% endblock %}

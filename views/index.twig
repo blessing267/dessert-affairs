@@ -1,18 +1,43 @@
 {% extends "base.twig" %}
 
 {% block content %}
-  <section class="container">
-    <h2>Hello from Timber + Twig (no Composer) 🎉</h2>
-    <p>If you see this, your minimal theme is working.</p>
 
-    {% if posts %}
-      <ul>
-        {% for p in posts %}
-          <li><a href="{{ p.link }}">{{ p.title }}</a></li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>No posts yet.</p>
-    {% endif %}
-  </section>
+<section class="page-content">
+
+    <div class="container">
+
+        {% if post %}
+
+            <h1>{{ post.title }}</h1>
+
+            <div class="entry-content">
+                {{ post.content }}
+            </div>
+
+        {% elseif posts %}
+
+            {% for post in posts %}
+
+                <article>
+
+                    <h2>
+                        <a href="{{ post.link }}">
+                            {{ post.title }}
+                        </a>
+                    </h2>
+
+                    <div>
+                        {{ post.preview }}
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        {% endif %}
+
+    </div>
+
+</section>
+
 {% endblock %}
