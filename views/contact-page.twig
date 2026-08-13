@@ -52,10 +52,29 @@
 
             <div class="contact-form">
 
-                {{ function(
-                    'do_shortcode',
-                    '[contact-form-7 id="16d184f" title="Dessert Affairs Contact form"]'
-                ) }}
+                {% set contact_form_shortcode =
+                    function(
+                        'get_field',
+                        'contact_form_shortcode'
+                    )
+                %}
+
+                {% if contact_form_shortcode %}
+
+                    {{
+                        function(
+                        'do_shortcode',
+                            contact_form_shortcode
+                        )
+                    }}
+
+                {% else %}
+
+                    <p>
+                        The contact form is currently unavailable.
+                    </p>
+
+                {% endif %}
 
             </div>
 
