@@ -62,6 +62,8 @@ remove_action(
     10
 );
 
+add_filter( 'woocommerce_cart_needs_shipping', '__return_false' );
+
 /**
  * Display product category navigation
  * on the Shop and category archive pages.
@@ -196,3 +198,53 @@ add_action(
     'wp_enqueue_scripts',
     'dessert_affairs_enqueue_scripts'
 );
+
+/**
+ * Display WhatsApp button on the WooCommerce
+ * Order Received / Thank You page.
+ */
+add_action( 'woocommerce_thankyou', 'dessert_affairs_whatsapp_order_button', 20 );
+
+function dessert_affairs_whatsapp_order_button( $order_id ) {
+
+    if ( ! $order_id ) {
+        return;
+    }
+
+    $order = wc_get_order( $order_id );
+
+    if ( ! $order ) {
+        return;
+    }
+
+    $whatsapp_number = '2348114643319';
+
+    $message = sprintf(
+        "Hi Dessert Affairs, I've just placed order #%s. I'd like to arrange how I will receive my order.",
+        $order->get_order_number()
+    );
+
+    $whatsapp_url = 'https://wa.me/' . $whatsapp_number . '?text=' . rawurlencode( $message );
+
+    ?>
+    
+    <section class="whatsapp-order">
+        <h2>Arrange your order</h2>
+
+        <p>
+            Your order has been received. Please contact us on WhatsApp
+            to arrange how you would like to receive your order.
+        </p>
+
+        <a
+            href="<?php echo esc_url( $whatsapp_url ); ?>"
+            class="button whatsapp-order__button"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Continue on WhatsApp
+        </a>
+    </section>
+
+    <?php
+}

@@ -7,32 +7,11 @@
     class="hero"
     {% if hero_image %}
         style="
-            background-image:
+            --hero-image:
             url('{{ hero_image.url }}');
         "
     {% endif %}
 >
-
-    <div class="hero-wave" aria-hidden="true">
-        <svg
-            viewBox="0 0 1440 120"
-            preserveAspectRatio="none"
-        >
-            <path
-                fill="currentColor"
-                d="
-                    M0,55
-                    C180,100 320,10 560,45
-                    C790,80 980,120 1200,65
-                    C1310,38 1370,35 1440,55
-                    L1440,120
-                    L0,120
-                    Z
-                "
-            />
-        </svg>
-    </div>
-
 </section>
 
 <!--Shop by categories-->
@@ -40,17 +19,10 @@
 
     <div class="container">
 
-        <div class="section-heading">
-            <span class="section-eyebrow">
-                Browse
-            </span>
-
+        <div class="section-heading category-heading-reveal">
+            <span class="section-eyebrow">Browse</span>
             <h2>Shop by Category</h2>
-
-            <p>
-                Explore our dessert categories and
-                find something delicious.
-            </p>
+            <p>Explore our dessert categories and find something delicious.</p>
         </div>
 
         <div class="category-grid">
@@ -68,12 +40,48 @@
 
 </section>
 
+<!-- Dessert Ticker -->
+<div class="dessert-ticker" aria-label="Dessert Affairs highlights">
+    <div class="dessert-ticker-track">
+
+        <div class="dessert-ticker-group">
+            <span>♡ Desserts made with love</span>
+            <span>•</span>
+            <span>♡ Fresh pastries</span>
+            <span>•</span>
+            <span>♡ Sweet treats</span>
+            <span>•</span>
+            <span>♡ Celebration cakes</span>
+            <span>•</span>
+            <span>♡ Catering for special occasions</span>
+            <span>•</span>
+        </div>
+
+        <div class="dessert-ticker-group" aria-hidden="true">
+            <span>♡ Desserts made with love</span>
+            <span>•</span>
+            <span>♡ Fresh pastries</span>
+            <span>•</span>
+            <span>♡ Sweet treats</span>
+            <span>•</span>
+            <span>♡ Celebration cakes</span>
+            <span>•</span>
+            <span>♡ Catering for special occasions</span>
+            <span>•</span>
+        </div>
+
+    </div>
+</div>
+
+<!--Featured Prducts-->
+<section class="featured-products">
+
 <!--Featured Prducts-->
 <section class="featured-products">
 
     <div class="container">
 
-        <div class="section-heading">
+        <div class="section-heading featured-heading-reveal">
             <span class="section-eyebrow">
                 Our favourites
             </span>
@@ -116,7 +124,7 @@
 
     <div class="container about-inner">
 
-        <div class="about-content">
+        <div class="about-content about-card-reveal">
 
             <span class="section-eyebrow">
                 Our Story
@@ -141,7 +149,7 @@
                 href="{{ site.url }}/about/"
                 class="text-link"
             >
-                Discover our story →
+                Discover our story
             </a>
 
         </div>
@@ -155,7 +163,7 @@
 
     <div class="container catering-grid">
 
-        <div class="catering-image">
+        <div class="catering-image catering-image-reveal">
 
             {% if catering_image %}
                 <img
@@ -166,7 +174,7 @@
 
         </div>
 
-        <div class="catering-content">
+        <div class="catering-content catering-content-reveal">
 
             <span class="section-eyebrow">
                 Celebrations & Events
@@ -281,7 +289,7 @@
             </h2>
 
             <p>
-                Take a look at some of our cakes,
+                Take a look at some of our
                 desserts and sweet creations.
             </p>
 
