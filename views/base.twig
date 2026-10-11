@@ -613,34 +613,39 @@
 
 </div>
 
-		<button
-    		class="floating-music-button"
-    		type="button"
-    		aria-label="Play background music"
-    		aria-pressed="false"
-		>
-    		<span
-        		class="music-icon"
-        		aria-hidden="true"
-    		>
-        		♪
-    		</span>
 
-    		<span class="music-label">
-        		Play Music
-    		</span>
-		</button>
+{% if enable_background_music and background_music_url %}
 
-		<audio
-    		id="dessert-affairs-music"
-    		preload="none"
-    		loop
-		>
-    		<source
-        		src="{{ theme.link }}/assets/audio/background.mp3"
-        		type="audio/mpeg"
-    		>
-		</audio>
+    <button
+        class="floating-music-button"
+        type="button"
+        aria-label="Play background music"
+        aria-pressed="false"
+    >
+        <span
+            class="music-icon"
+            aria-hidden="true"
+        >
+            ♪
+        </span>
+
+        <span class="music-label">
+            Play Music
+        </span>
+    </button>
+
+    <audio
+        id="dessert-affairs-music"
+        preload="none"
+        loop
+    >
+        <source
+            src="{{ background_music_url|e('html_attr') }}"
+            type="audio/mpeg"
+        >
+    </audio>
+
+{% endif %}
 
 		<main>
 			{% block content %}{% endblock %}
@@ -734,6 +739,7 @@
 						</p>
 					{% endif %}
 
+                    <h4>Opening Hours</h4>
 					{% if opening_hours %}
 						<p class="opening-hours">
 							{{ opening_hours }}

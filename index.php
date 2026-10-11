@@ -56,6 +56,22 @@ if ($site_settings) {
         'opening_hours',
         $site_settings->ID
     );
+
+    $context['enable_background_music'] = (bool) get_field(
+        'enable_background_music',
+        $site_settings->ID
+    );
+
+    $music = get_field(
+        'background_music',
+        $site_settings->ID
+    );
+
+    $context['background_music_url'] = (
+        is_array($music) && ! empty($music['url'])
+    )
+        ? $music['url']
+        : '';
 }
 
 if (is_front_page()) {

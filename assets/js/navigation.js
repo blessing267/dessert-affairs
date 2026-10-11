@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
+    
     /* =========================
        BACKGROUND MUSIC
     ========================= */
@@ -50,87 +51,187 @@ document.addEventListener('DOMContentLoaded', () => {
         '#dessert-affairs-music'
     );
 
-    if (musicButton && audio) {
+    const musicLabel = musicButton?.querySelector(
+        '.music-label'
+    );
 
-        musicButton.addEventListener(
-            'click',
-            async () => {
+    const musicIcon = musicButton?.querySelector(
+        '.music-icon'
+    );
 
-                const isPlaying =
-                    !audio.paused;
+    const musicStorageKey = 'dessertAffairsMusicState';
 
-                if (isPlaying) {
+    function updateMusicButton(isPlaying) {
+        if (!musicButton) return;
 
-                    audio.pause();
-
-                    musicButton.classList.remove(
-                        'is-playing'
-                    );
-
-                    musicButton.setAttribute(
-                        'aria-pressed',
-                        'false'
-                    );
-
-                    musicButton.setAttribute(
-                        'aria-label',
-                        'Play background music'
-                    );
-
-                    const label =
-                        musicButton.querySelector(
-                            '.music-label'
-                        );
-
-                    if (label) {
-                        label.textContent =
-                            'Play Music';
-                    }
-
-                    return;
-                }
-
-                try {
-
-                    await audio.play();
-
-                    musicButton.classList.add(
-                        'is-playing'
-                    );
-
-                    musicButton.setAttribute(
-                        'aria-pressed',
-                        'true'
-                    );
-
-                    musicButton.setAttribute(
-                        'aria-label',
-                        'Pause background music'
-                    );
-
-                    const label =
-                        musicButton.querySelector(
-                            '.music-label'
-                        );
-
-                    if (label) {
-                        label.textContent =
-                            'Pause Music';
-                    }
-
-                } catch (error) {
-
-                    console.error(
-                        'Audio could not be played.',
-                        error
-                    );
-
-                }
-
-            }
+        musicButton.classList.toggle(
+            'is-playing',
+            isPlaying
         );
 
+        musicButton.setAttribute(
+            'aria-pressed',
+            isPlaying ? 'true' : 'false'
+        );
+
+        musicButton.setAttribute(
+            'aria-label',
+            isPlaying
+                ? 'Pause background music'
+                : 'Play background music'
+        );
+
+        if (musicLabel) {
+            musicLabel.textContent = isPlaying
+                ? 'Pause Music'
+                : 'Play Music';
+        }
+
+        if (musicIcon) {
+            musicIcon.textContent = isPlaying
+                ? 'Ⅱ'
+                : '♪';
+        }
     }
+
+    if (musicButton && audio) {
+
+        // Restore the previous playback position after navigation.
+        let savedMusicState = null;
+
+        try {
+            savedMusicState = JSON.parse(
+                sessionStorage.getItem(musicStorageKey)
+            );
+        } catch (error) {
+            savedMusicState = null;
+        }
+
+        let restoreAttempted = false;
+
+        if (
+            savedMusicState &&
+            savedMusicState.playing &&
+            Number.isFinite(savedMusicState.time) &&
+            savedMusicState.time >= 0
+        ) {
+            audio.addEventListener(
+                'loadedmetadata',
+                async () => {
+                    if (restoreAttempted) return;
+
+                    restoreAttempted = true;
+
+                    try {
+                        const duration = audio.duration;
+
+                        if (Number.isFinite(duration) && duration > 0) {
+                            audio.currentTime = Math.min(
+                                savedMusicState.time,
+                                Math.max(0, duration - 0.1)
+                            );
+                        }
+
+                        await audio.play();
+                        updateMusicButton(true);
+
+                        try {
+                            sessionStorage.setItem(
+                                musicStorageKey,
+                                JSON.stringify({
+                                    playing: true,
+                                    time: audio.currentTime || 0
+                                })
+                            );
+                        } catch (error) {
+                            // Ignore storage errors.
+                        }
+
+                    } catch (error) {
+                        // Some browsers block playback after navigation.
+                        // Keep the saved position for the next Play click.
+                        updateMusicButton(false);
+                    }
+                },
+                { once: true }
+            );
+
+            // Start loading the audio so loadedmetadata can fire.
+            audio.load();
+        }
+
+        // Save playback state when leaving the current page.
+        window.addEventListener('pagehide', () => {
+            try {
+                sessionStorage.setItem(
+                    musicStorageKey,
+                    JSON.stringify({
+                        playing: !audio.paused,
+                        time: audio.currentTime || 0
+                    })
+                );
+            } catch (error) {
+                // Music controls still work if storage is unavailable.
+            }
+        });
+
+        // Keep the button in sync with the actual audio state.
+        audio.addEventListener('pause', () => {
+            updateMusicButton(false);
+        });
+
+        audio.addEventListener('play', () => {
+            updateMusicButton(true);
+        });
+
+        musicButton.addEventListener('click', async () => {
+
+            if (!audio.paused) {
+                audio.pause();
+
+                try {
+                    sessionStorage.setItem(
+                        musicStorageKey,
+                        JSON.stringify({
+                            playing: false,
+                            time: audio.currentTime || 0
+                        })
+                    );
+                } catch (error) {
+                    // Ignore storage errors.
+                }
+
+                updateMusicButton(false);
+                return;
+            }
+
+            try {
+                await audio.play();
+                updateMusicButton(true);
+
+                try {
+                    sessionStorage.setItem(
+                        musicStorageKey,
+                        JSON.stringify({
+                            playing: true,
+                            time: audio.currentTime || 0
+                        })
+                    );
+                } catch (error) {
+                    // Playback does not depend on storage.
+                }
+
+            } catch (error) {
+                console.error(
+                    'Audio could not be played.',
+                    error
+                );
+
+                updateMusicButton(false);
+            }
+        });
+    }
+
 
     /* =========================
         SHOP CATEGORY REVEAL

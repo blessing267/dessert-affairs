@@ -27,6 +27,66 @@ if (class_exists('Timber\\Timber')) {
     Timber\Timber::$dirname = ['views'];
 }
 
+
+/**
+ * Make Site Settings available to every Timber template.
+ */
+function dessert_affairs_add_site_settings_to_timber_context($context)
+{
+    if (!function_exists('get_field')) {
+        return $context;
+    }
+
+    $site_settings = get_page_by_path('site-settings');
+
+    if (!$site_settings) {
+        return $context;
+    }
+
+    $settings_id = $site_settings->ID;
+
+    // Shared footer and social links.
+    $fields = [
+        'footer_text',
+        'phone_number',
+        'email_address',
+        'instagram_url',
+        'facebook_url',
+        'tiktok_url',
+        'opening_hours',
+    ];
+
+    foreach ($fields as $field) {
+        $context[$field] = get_field($field, $settings_id);
+    }
+
+    // Background music settings.
+    $context['enable_background_music'] = (bool) get_field(
+        'enable_background_music',
+        $settings_id
+    );
+
+    $music = get_field('background_music', $settings_id);
+
+    if (is_array($music) && !empty($music['url'])) {
+        $context['background_music_url'] = $music['url'];
+    } elseif (is_numeric($music)) {
+        $context['background_music_url'] =
+            wp_get_attachment_url((int) $music) ?: '';
+    } elseif (is_string($music)) {
+        $context['background_music_url'] = $music;
+    } else {
+        $context['background_music_url'] = '';
+    }
+
+    return $context;
+}
+
+add_filter(
+    'timber/context',
+    'dessert_affairs_add_site_settings_to_timber_context'
+);
+
 /**
  * Configure theme features.
  */
@@ -248,3 +308,4 @@ function dessert_affairs_whatsapp_order_button( $order_id ) {
 
     <?php
 }
+
