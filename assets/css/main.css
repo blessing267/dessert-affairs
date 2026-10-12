@@ -2726,5 +2726,185 @@ main > .hero:first-child {
     padding: 1.25rem;
   }
 }
+/* =========================
+   DESSERT AFFAIRS CHECKOUT
+   Classic WooCommerce Checkout
+========================= */
+.woocommerce-checkout .woocommerce {
+  width: min(100% - 2rem, 1200px);
+  margin: 3rem auto 5rem;
+  color: #292323;
+}
+.woocommerce-checkout h3,
+.woocommerce-checkout #order_review_heading {
+  color: #292323;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+}
+.woocommerce-checkout {
+  /* Checkout form layout */
+}
+.woocommerce-checkout form.checkout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+.woocommerce-checkout #customer_details,
+.woocommerce-checkout #order_review {
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 1.75rem;
+  background: #fffaf8;
+  border: 1px solid #f0e3e3;
+  border-radius: 18px;
+  box-shadow: 0 8px 25px rgba(41, 35, 35, 0.04);
+}
+.woocommerce-checkout #order_review_heading {
+  margin: 0 0 1rem;
+  font-size: 1.6rem;
+}
+.woocommerce-checkout {
+  /* Labels */
+}
+.woocommerce-checkout form .form-row label {
+  display: block;
+  margin-bottom: 0.45rem;
+  color: #292323;
+  font-weight: 600;
+}
+.woocommerce-checkout .required {
+  color: #b84a5a;
+}
+.woocommerce-checkout {
+  /* Text fields */
+}
+.woocommerce-checkout input.input-text,
+.woocommerce-checkout textarea,
+.woocommerce-checkout select,
+.woocommerce-checkout .select2-container .select2-selection--single {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 48px;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid #e4d4d5;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #292323;
+  font: inherit;
+}
+.woocommerce-checkout textarea {
+  min-height: 120px;
+}
+.woocommerce-checkout input:focus,
+.woocommerce-checkout textarea:focus,
+.woocommerce-checkout select:focus {
+  outline: 2px solid rgba(184, 74, 90, 0.2);
+  border-color: #b84a5a;
+}
+.woocommerce-checkout {
+  /* Order summary */
+}
+.woocommerce-checkout table.shop_table {
+  width: 100%;
+  border: 0;
+  border-collapse: collapse;
+  background: transparent;
+}
+.woocommerce-checkout table.shop_table th,
+.woocommerce-checkout table.shop_table td {
+  padding: 0.9rem 0.5rem;
+  border-bottom: 1px solid #f0e3e3;
+  text-align: left;
+  vertical-align: top;
+}
+.woocommerce-checkout table.shop_table th:last-child,
+.woocommerce-checkout table.shop_table td:last-child {
+  text-align: right;
+}
+.woocommerce-checkout table.shop_table .order-total th,
+.woocommerce-checkout table.shop_table .order-total td {
+  color: #b84a5a;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.woocommerce-checkout {
+  /* Payment methods */
+}
+.woocommerce-checkout #payment {
+  margin-top: 1.5rem;
+  background: #fff8f4;
+  border-radius: 12px;
+}
+.woocommerce-checkout #payment ul.payment_methods {
+  padding: 1.25rem;
+  border-bottom: 1px solid #eadfd9;
+}
+.woocommerce-checkout #payment .payment_box {
+  background: #ffffff;
+  border-radius: 10px;
+}
+.woocommerce-checkout #payment .payment_box::before {
+  border-bottom-color: #ffffff;
+}
+.woocommerce-checkout #payment .place-order {
+  padding: 1.25rem;
+}
+.woocommerce-checkout #payment button#place_order {
+  width: 100%;
+  min-height: 50px;
+  padding: 0.9rem 1.3rem;
+  border: 0;
+  border-radius: 999px;
+  background: #b84a5a;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.woocommerce-checkout #payment button#place_order:hover {
+  background: #8f3442;
+  transform: translateY(-1px);
+}
+.woocommerce-checkout {
+  /* Notices */
+}
+.woocommerce-checkout .woocommerce-info,
+.woocommerce-checkout .woocommerce-message,
+.woocommerce-checkout .woocommerce-error {
+  padding: 1rem 1.25rem;
+  border-radius: 10px;
+  line-height: 1.6;
+}
+.woocommerce-checkout .woocommerce-info {
+  border-top-color: #b84a5a;
+  background: #fff8f4;
+}
+.woocommerce-checkout {
+  /* Mobile checkout */
+}
+@media (max-width: 767px) {
+  .woocommerce-checkout .woocommerce {
+    width: calc(100% - 1.5rem);
+    margin: 2rem auto 3rem;
+  }
+  .woocommerce-checkout form.checkout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+  }
+  .woocommerce-checkout #customer_details,
+  .woocommerce-checkout #order_review {
+    padding: 1.1rem;
+  }
+  .woocommerce-checkout #order_review_heading {
+    font-size: 1.4rem;
+  }
+  .woocommerce-checkout table.shop_table th,
+  .woocommerce-checkout table.shop_table td {
+    padding: 0.75rem 0.3rem;
+    overflow-wrap: anywhere;
+  }
+}
 
 /*# sourceMappingURL=main.css.map */
