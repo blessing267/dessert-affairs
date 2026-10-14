@@ -1193,12 +1193,14 @@ body {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
 
   .hero {
     height: 440px;
     min-height: 0;
+    background-size: 100% 100%;
     background-position: center;
+    background-repeat: no-repeat;
   }
 
   .hero-copy {
@@ -3465,7 +3467,7 @@ body {
   }
 
   .music-label {
-    display: none;
+    display: inline;
   }
 }
 
@@ -4223,4 +4225,50 @@ input[type="submit"]:hover {
       overflow-wrap: anywhere;
     }
   }
+}
+
+/* =========================
+   MOBILE SHOP PRODUCT GRID
+========================= */
+
+@media (max-width: 600px) {
+  .woocommerce ul.products {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 1rem;
+  }
+
+  .woocommerce ul.products li.product {
+    width: 100% !important;
+    min-width: 0;
+  }
+
+  .woocommerce ul.products li.product img {
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
+
+  .woocommerce ul.products li.product .woocommerce-loop-product__title {
+    padding: 0 0.75rem;
+    font-size: 1rem;
+  }
+
+  .woocommerce ul.products li.product .price {
+    padding: 0 0.75rem;
+    font-size: 1rem;
+  }
+}
+
+/* =========================
+   FOOTER OPENING HOURS
+========================= */
+
+.footer-contact h4:last-of-type {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.footer-contact .opening-hours {
+  margin-top: 0;
+  line-height: 1.8;
 }
